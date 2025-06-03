@@ -9,13 +9,20 @@ Este pacote fornece uma maneira simples de conectar a um banco de dados Impala u
 
 ## Configuração
 
-1.  **Clonar/Copiar Pacote**:
-    Coloque este diretório `bisp_connector` em seu projeto ou em um local acessível pelo seu ambiente Python.
+1.  **Baixar o Projeto (Clonar Repositório)**:
+    Para obter o código do projeto, clone o repositório do GitHub usando o seguinte comando no seu terminal:
+    ```bash
+    git clone https://github.com/rogeriogarcia/bisp-impala-python.git
+    ```
+    Isso criará um diretório chamado `bisp-impala-python` com todos os arquivos do projeto. Navegue para dentro deste diretório para os próximos passos:
+    ```bash
+    cd bisp-impala-python
+    ```
 
 2.  **(Opcional, mas Recomendado) Criar e Ativar Ambiente Virtual**:
-    Antes de instalar as dependências, é uma boa prática criar um ambiente virtual para isolar as bibliotecas do projeto. Navegue até a raiz do diretório `bisp_connector` (ou seu projeto) e execute:
+    Dentro do diretório `bisp-impala-python`, é uma boa prática criar um ambiente virtual para isolar as bibliotecas do projeto. Execute:
 
-    *   Para criar o ambiente virtual (substitua `.venv` pelo nome que preferir):
+    *   Para criar o ambiente virtual (o nome `.venv` é uma convenção comum):
         ```bash
         python -m venv .venv
         ```
@@ -29,16 +36,16 @@ Este pacote fornece uma maneira simples de conectar a um banco de dados Impala u
             ```bash
             source .venv/bin/activate
             ```
-    Você saberá que o ambiente virtual está ativo se o nome dele aparecer no início do seu prompt de comando (ex: `(.venv) C:\path\to\project>`).
+    Você saberá que o ambiente virtual está ativo se o nome dele aparecer no início do seu prompt de comando (ex: `(.venv) ...\bisp-impala-python>`).
 
 3.  **Instalar Dependências**:
-    Com o ambiente virtual ativo (se você criou um), navegue até o diretório `BISP_connector` (ou a raiz do seu projeto, se você o integrou lá) e instale os pacotes Python necessários:
+    Com o ambiente virtual ativo (se você criou um), ainda dentro do diretório `bisp-impala-python`, instale os pacotes Python necessários:
     ```bash
     pip install -r requirements.txt
     ```
 
 4.  **Configurar Variáveis de Ambiente**:
-    Crie um arquivo `.env` na raiz do seu projeto (ou de onde você executará seu script) copiando o arquivo `.env.example`:
+    Na raiz do diretório `bisp-impala-python`, crie um arquivo `.env` copiando o arquivo `.env.example`:
     ```bash
     cp .env.example .env
     ```
