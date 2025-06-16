@@ -28,8 +28,19 @@ def get_bisp_connection() -> HiveServer2Connection:
         ImpalaConnectionError: If any required environment variable is missing
                             or if the connection fails.
     """
-    # Load environment variables from .env file if present
-    load_dotenv(find_dotenv())
+    # --- Debugging Start ---
+    print("--- Debugging BISP Connector ---")
+    env_path = find_dotenv()
+    print(f"Attempting to load .env file from: {env_path if env_path else 'No .env file found by find_dotenv()'}")
+    
+    # Try with override=True to ensure .env takes precedence
+    loaded_dotenv = load_dotenv(env_path, override=True) 
+    # If you want to test without override first, keep the original:
+    # loaded_dotenv = load_dotenv(env_path)
+    print(f".env file loaded: {loaded_dotenv}")
+    
+    print(f"Current working directory: {os.getcwd()}")
+    # --- Debugging End ---
 
     required_env_vars = [
         'BISP_HOST', 'BISP_DATABASE', 'BISP_USER', 'BISP_PASSWORD'
@@ -46,6 +57,22 @@ def get_bisp_connection() -> HiveServer2Connection:
     auth_mechanism = os.getenv('BISP_AUTH_MECHANISM', 'PLAIN')
     use_ssl = os.getenv('BISP_USE_SSL', 'True').lower() == 'true'
     ca_cert_path = os.getenv('BISP_CA_CERT_PATH')
+    
+    # --- Debugging Start ---
+    print(f"Value of BISP_CA_CERT_PATH from os.getenv: {ca_cert_path}")
+    if ca_cert_path:
+        # Check if it's an absolute path, if not, resolve it based on CWD
+        if not os.path.isabs(ca_cert_path):
+            abs_ca_cert_path = os.path.join(os.getcwd(), ca_cert_path)
+            print(f"Relative BISP_CA_CERT_PATH '{ca_cert_path}' resolved to absolute path: {abs_ca_cert_path}")
+            print(f"Does this resolved absolute path exist? {os.path.exists(abs_ca_cert_path)}")
+        else:
+            print(f"Absolute BISP_CA_CERT_PATH: {ca_cert_path}")
+            print(f"Does this absolute path exist? {os.path.exists(ca_cert_path)}")
+    else:
+        print("BISP_CA_CERT_PATH is not set.")
+    print("--- End Debugging BISP Connector ---")
+    # --- Debugging End ---
 
     if use_ssl and not ca_cert_path:
         raise ImpalaConnectionError("BISP_CA_CERT_PATH is required when BISP_USE_SSL is True.")
